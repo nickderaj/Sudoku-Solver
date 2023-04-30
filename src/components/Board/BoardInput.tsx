@@ -6,7 +6,7 @@ import { solveBoard } from './helpers/solver';
 
 const BoardInput: React.FC = () => {
   const [board, setBoard] = useState<number[][]>(EMPTY_BOARD);
-  const [isSolved, setIsSolved] = useState<boolean>(false);
+  const [isLocked, setIsLocked] = useState<boolean>(false);
 
   const onCellChange = (row: number, col: number, value: number) => {
     if (value === undefined || value === null || Number.isNaN(value)) {
@@ -33,32 +33,36 @@ const BoardInput: React.FC = () => {
   };
 
   const handleSolve = () => {
+    if (isLocked) return;
+    setIsLocked(true);
+
     const newBoard = [...JSON.parse(JSON.stringify(board))]; // deep copy
     if (solveBoard(newBoard)) {
       setBoard(newBoard);
     } else {
       alert('Puzzle is unsolvable');
+      setIsLocked(false);
     }
   };
 
   const handleClear = () => {
-    setIsSolved(false);
+    setIsLocked(false);
     setBoard(EMPTY_BOARD);
   };
 
   const handleSolvable = () => {
-    setIsSolved(false);
+    setIsLocked(false);
     setBoard(SOLVABLE_BOARD);
   };
 
   const handleUnsolvable = () => {
-    setIsSolved(false);
+    setIsLocked(false);
     setBoard(UNSOLVABLE_BOARD);
   };
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <Board board={board} onCellChange={onCellChange} isSolved={isSolved} />
+      <Board board={board} onCellChange={onCellChange} isLocked={isLocked} />
       <div className="flex mt-4 gap-2">
         <Button onClick={handleClear} title="Clear" variant="secondary" />
         <Button onClick={handleSolve} title="Solve" />

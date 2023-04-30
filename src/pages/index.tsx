@@ -6,7 +6,8 @@ import { PageWithLayout } from 'src/types/page';
 export default function Home(_: PageWithLayout) {
   return (
     <>
-      <section className="flex justify-center items-center h-screen w-screen">
+      <section className="flex flex-col justify-center items-center h-screen w-screen">
+        <p className="text-2xl mb-4">Sudoku Solver</p>
         <BoardInput />
       </section>
       <SampleModal />
@@ -14,4 +15,4 @@ export default function Home(_: PageWithLayout) {
   );
 }
 
-Home.getLayout = (page: React.ReactNode) => <PrimaryLayout title="Home Page">{page}</PrimaryLayout>;
+Home.getLayout = (page: React.ReactNode) => <PrimaryLayout title="Sudoku Solver">{page}</PrimaryLayout>;
