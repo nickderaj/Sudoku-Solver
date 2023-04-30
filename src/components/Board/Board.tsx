@@ -1,15 +1,20 @@
+import InputCell from './InputCell';
+
 type BoardProps = {
   board: number[][];
+  onCellChange: (row: number, col: number, value: number) => void;
 };
 
-const Board: React.FC<BoardProps> = ({ board }) => {
+const Board: React.FC<BoardProps> = ({ board, onCellChange }) => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>, row: number, col: number) => {
+    const value = parseInt(event.target.value, 10);
+    onCellChange(row, col, value);
+  };
+
   const renderCell = (row: number, col: number) => {
     const value = board[row][col];
-    if (value === 0) {
-      return <div className="w-[30px] h-[30px] border text-center font-xl" />;
-    } else {
-      return <div className="w-[30px] h-[30px] border text-center font-xl">{value}</div>;
-    }
+
+    return <InputCell row={row} col={col} cell={value} handleChange={handleChange} />;
   };
 
   const renderRow = (row: number) => {
