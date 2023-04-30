@@ -67,7 +67,7 @@ const BoardInput: React.FC = () => {
         <Button onClick={handleClear} title="Clear" variant="secondary" />
         <Button onClick={handleSolve} title="Solve" />
       </div>
-      <p className="mt-4 text-xl">Templates:</p>
+      <p className="mt-4 text-xl font-cairo">Templates:</p>
       <div className="flex mt-2 gap-2">
         <Button onClick={handleUnsolvable} title="Unsolvable" variant="red" />
         <Button onClick={handleSolvable} title="Solvable" variant="green" />
