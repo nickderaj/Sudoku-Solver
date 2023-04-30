@@ -3,9 +3,10 @@ import InputCell from './InputCell';
 type BoardProps = {
   board: number[][];
   onCellChange: (row: number, col: number, value: number) => void;
+  isSolved: boolean;
 };
 
-const Board: React.FC<BoardProps> = ({ board, onCellChange }) => {
+const Board: React.FC<BoardProps> = ({ board, onCellChange, isSolved }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, row: number, col: number) => {
     const value = parseInt(event.target.value, 10);
     onCellChange(row, col, value);
@@ -14,7 +15,7 @@ const Board: React.FC<BoardProps> = ({ board, onCellChange }) => {
   const renderCell = (row: number, col: number) => {
     const value = board[row][col];
 
-    return <InputCell row={row} col={col} cell={value} handleChange={handleChange} />;
+    return <InputCell row={row} col={col} cell={value} handleChange={handleChange} locked={isSolved} />;
   };
 
   const renderRow = (row: number) => {

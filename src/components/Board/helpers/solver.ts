@@ -39,16 +39,14 @@ const isValid = (board: number[][], row: number, col: number, num: number): bool
   return true;
 };
 
-export const solveSudoku = (board: number[][]): boolean => {
+export const solveBoard = (board: number[][]): number[][] | null => {
   // Find the next empty cell
   const emptyCell = findEmptyCell(board);
   const row = emptyCell[0];
   const col = emptyCell[1];
 
   // If there are no empty cells, the puzzle is solved
-  if (row === -1 && col === -1) {
-    return true;
-  }
+  if (row === -1 && col === -1) return board;
 
   // Try each number from 1 to 9
   for (let num = 1; num <= 9; num++) {
@@ -56,9 +54,8 @@ export const solveSudoku = (board: number[][]): boolean => {
       board[row][col] = num;
 
       // Recursively solve the puzzle
-      if (solveSudoku(board)) {
-        return true;
-      }
+      const solved = solveBoard(board);
+      if (solved) return solved;
 
       // If the recursive call doesn't solve the puzzle, backtrack
       board[row][col] = 0;
@@ -66,5 +63,5 @@ export const solveSudoku = (board: number[][]): boolean => {
   }
 
   // If no number works, backtrack
-  return false;
+  return null;
 };
