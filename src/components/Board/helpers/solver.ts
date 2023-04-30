@@ -66,3 +66,73 @@ export const solveBoard = (board: number[][]): boolean => {
   // If no number works, backtrack
   return false;
 };
+
+// check for validity
+const checkRows = (board: number[][]): [boolean, { row: number; col: number } | null] => {
+  for (let row = 0; row < 9; row++) {
+    const rowValues = new Set();
+    for (let col = 0; col < 9; col++) {
+      const value = board[row][col];
+      if (value === 0) {
+        continue; // Empty space, skip
+      }
+      if (rowValues.has(value)) {
+        return [false, { row, col }]; // Duplicate value in row
+      }
+      rowValues.add(value);
+    }
+  }
+  return [true, null];
+};
+
+const checkColumns = (board: number[][]): [boolean, { row: number; col: number } | null] => {
+  for (let col = 0; col < 9; col++) {
+    const colValues = new Set();
+    for (let row = 0; row < 9; row++) {
+      const value = board[row][col];
+      if (value === 0) {
+        continue; // Empty space, skip
+      }
+      if (colValues.has(value)) {
+        return [false, { row, col }]; // Duplicate value in column
+      }
+      colValues.add(value);
+    }
+  }
+  return [true, null];
+};
+
+export const checkSubGrids = (board: number[][]): [boolean, { row: number; col: number } | null] => {
+  for (let i = 0; i < 9; i += 3) {
+    for (let j = 0; j < 9; j += 3) {
+      const subgridValues = new Set();
+      for (let row = i; row < i + 3; row++) {
+        for (let col = j; col < j + 3; col++) {
+          const value = board[row][col];
+          if (value === 0) {
+            continue; // Empty space, skip
+          }
+          if (subgridValues.has(value)) {
+            return [false, { row, col }]; // Duplicate value in sub-grid
+          }
+          subgridValues.add(value);
+        }
+      }
+    }
+  }
+  return [true, null];
+};
+
+export const invalidSudoku = (board: number[][]) => {
+  const [validRows, rowCell] = checkRows(board);
+  if (!validRows) return rowCell;
+
+  const [validCols, colCell] = checkColumns(board);
+  if (!validCols) return colCell;
+
+  const [validSubGrids, subGridCell] = checkSubGrids(board);
+  if (!validSubGrids) return subGridCell;
+
+  // Board is valid
+  return null;
+};

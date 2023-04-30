@@ -4,9 +4,10 @@ type BoardProps = {
   board: number[][];
   onCellChange: (row: number, col: number, value: number) => void;
   isLocked: boolean;
+  highlighted: number[];
 };
 
-const Board: React.FC<BoardProps> = ({ board, onCellChange, isLocked }) => {
+const Board: React.FC<BoardProps> = ({ board, onCellChange, isLocked, highlighted }) => {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>, row: number, col: number) => {
     const value = parseInt(event.target.value, 10);
     onCellChange(row, col, value);
@@ -15,7 +16,7 @@ const Board: React.FC<BoardProps> = ({ board, onCellChange, isLocked }) => {
   const renderCell = (row: number, col: number) => {
     const value = board[row][col];
 
-    return <InputCell row={row} col={col} cell={value} handleChange={handleChange} locked={isLocked} />;
+    return <InputCell row={row} col={col} cell={value} handleChange={handleChange} locked={isLocked} highlighted={highlighted} />;
   };
 
   const renderRow = (row: number) => {
