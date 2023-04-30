@@ -39,14 +39,14 @@ const isValid = (board: number[][], row: number, col: number, num: number): bool
   return true;
 };
 
-export const solveBoard = (board: number[][]): number[][] | null => {
+export const solveBoard = (board: number[][]): boolean => {
   // Find the next empty cell
   const emptyCell = findEmptyCell(board);
   const row = emptyCell[0];
   const col = emptyCell[1];
 
   // If there are no empty cells, the puzzle is solved
-  if (row === -1 && col === -1) return board;
+  if (row === -1 && col === -1) return true;
 
   // Try each number from 1 to 9
   for (let num = 1; num <= 9; num++) {
@@ -54,8 +54,9 @@ export const solveBoard = (board: number[][]): number[][] | null => {
       board[row][col] = num;
 
       // Recursively solve the puzzle
-      const solved = solveBoard(board);
-      if (solved) return solved;
+      if (solveBoard(board)) {
+        return true;
+      }
 
       // If the recursive call doesn't solve the puzzle, backtrack
       board[row][col] = 0;
@@ -63,5 +64,5 @@ export const solveBoard = (board: number[][]): number[][] | null => {
   }
 
   // If no number works, backtrack
-  return null;
+  return false;
 };
