@@ -21,7 +21,7 @@
       "@/elements/*": ["src/elements/*"],
       "@/components/*": ["src/components/*"],
       "@/types/*": ["src/types/*"],
-      "@/helpers/*": ["src/helpers/*"],
+      "@/helpers/*": ["src/components/Board/helpers/*"],
       "@/redux/*": ["src/app/redux/*"],
       "@/tests/*": ["src/tests/*"]
     }
